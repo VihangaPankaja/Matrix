@@ -1224,22 +1224,3 @@ class Matrix:   # TODO: exception handling not done completely
 
         def rotate(self, angle: Union[int, float]):
             pass
-
-
-if __name__ == '__main__':
-
-    a = Matrix([
-        [1, 2, 4, 7],
-        [0, 0, 0, 0],
-        [0, 4, 1, 6],
-        [2, 5, 8, 14]
-    ])
-    b = Matrix([
-        [0, 0, 0],
-        [0, 1, 1],
-        [0, 0, 2]
-    ])
-
-    c = Matrix.random_matrix(7, 8, 'int', (1, 10))
-
-    # print(a.ElementaryTransform.row_echelon())
