@@ -209,6 +209,12 @@ class Matrix:   # TODO: exception handling not done completely
                 cnt += 1
 
         return cnt
+    
+    @property
+    def trace(self):
+        if not self.is_square_matrix:
+            raise MatrixError.NotSquareMatrix
+        return sum([self._matrix[i][i] for i in range(len(self._matrix))])
 
     @classmethod
     def random_matrix(cls, rows: int, cols: int = None, type: str = 'int', num_range: tuple[Union[int, float, complex], Union[int, float, complex]] = None) -> 'Matrix':
