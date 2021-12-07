@@ -2,7 +2,6 @@ from copy import deepcopy
 from functools import cached_property
 from itertools import chain
 from decimal import Decimal
-# from functools import total_ordering
 from typing import Iterable, Union
 
 __all__ = ['Matrix']
@@ -61,7 +60,6 @@ class MatrixError(Exception):
             super().__init__(self.message)
 
 
-# @total_ordering
 class Matrix:   # TODO: exception handling not done completely
 
     def __init__(self, elements: Iterable[Iterable[Union[int, float, complex]]]) -> None:
@@ -1124,25 +1122,35 @@ class Matrix:   # TODO: exception handling not done completely
                 ech_ord.sort(key=lambda x: x[1])
                 tmp = [tmp[i[0]] for i in ech_ord]
             
-            def divide():
+            def divide(_from = None):
                 nonlocal tmp
-                pass
+                for row in tmp[_from:]:
+                    for i in row:
+                        if i:
+                            num = i
+                            break
+                    else: continue
+                    if num == 1: continue
+                    for index, i in enumerate(row):
+                        row[index] = i/num if i else i
             
-            def row_reduce():
+            def row_reduce(_from = 0):
                 nonlocal tmp
-                pass
-            
-            def is_echelon():
-                nonlocal tmp
-                pass
-            
-            while is_echelon():
+                if _from == len(tmp):
+                    return
+                ref = tmp[_from]
+                for index, row in enumerate(tmp[_from+1:]):
+                    if row[_from] == 0: continue
+                    tmp[index + _from + 1] = [(i - ref[loc]) for loc, i in enumerate(row)]
+                    
+            for i in range(len(tmp)):
                 sort()
-            
-
+                divide(i)
+                row_reduce(i)
+                
             tmp = list((list(map(lambda x: int(z) if ('.' not in (
                 z := x.to_eng_string())) else float(z), row)) for row in tmp))
-            return __class__(tmp)
+            return Matrix(tmp)
 
         def column_echelon(self) -> 'Matrix':
             pass
@@ -1185,26 +1193,26 @@ class Matrix:   # TODO: exception handling not done completely
 
             return __class__(mat)
 
-        def _row_multiply(row, mul, mat):
-            mat[row-1] = [i*mul for i in mat[row-1]]
+        # def _row_multiply(row, mul, mat):
+        #     mat[row-1] = [i*mul for i in mat[row-1]]
 
-        def _column_multiply(col, mul, mat):
-            for row in mat:
-                row[col-1] = mul*row[col-1]
+        # def _column_multiply(col, mul, mat):
+        #     for row in mat:
+        #         row[col-1] = mul*row[col-1]
 
-        def _row_transform(R_n1, x, R_n2, mat):
-            mat[R_n1-1] = [i+x*j for i, j in zip(mat[R_n1-1], mat[R_n2-1])]
+        # def _row_transform(R_n1, x, R_n2, mat):
+        #     mat[R_n1-1] = [i+x*j for i, j in zip(mat[R_n1-1], mat[R_n2-1])]
 
-        def _column_transform(C_n1, x, C_n2, mat):
-            for row in mat:
-                row[C_n1-1] = row[C_n1-1] + x*row[C_n2-1]
+        # def _column_transform(C_n1, x, C_n2, mat):
+        #     for row in mat:
+        #         row[C_n1-1] = row[C_n1-1] + x*row[C_n2-1]
 
-        def _row_swap(R_n1, R_n2, mat):
-            mat[R_n1-1], mat[R_n2-1] = mat[R_n2-1], mat[R_n1-1]
+        # def _row_swap(R_n1, R_n2, mat):
+        #     mat[R_n1-1], mat[R_n2-1] = mat[R_n2-1], mat[R_n1-1]
 
-        def _column_swap(C_n1, C_n2, mat):
-            for row in mat:
-                row[C_n1-1], row[C_n2-1] = row[C_n2-1], row[C_n1-1]
+        # def _column_swap(C_n1, C_n2, mat):
+        #     for row in mat:
+        #         row[C_n1-1], row[C_n2-1] = row[C_n2-1], row[C_n1-1]
 
     class __LinearTransform:    # TODO: linear transform not done
         def __init__(self, matrix: 'Matrix'):
