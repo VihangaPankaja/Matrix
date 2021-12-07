@@ -1271,7 +1271,7 @@ class Matrix:   # TODO: exception handling not done completely
 
     class __LinearTransform:    # TODO: linear transform not done
         def __init__(self, matrix: 'Matrix'):
-            pass
+            self.matrix = matrix
 
         def shear(self, axis: Union[int, str], value: Union[int, float]) -> 'Matrix':
             pass
@@ -1282,8 +1282,13 @@ class Matrix:   # TODO: exception handling not done completely
         def squeeze_map(self, ratio: Union[int, float]) -> 'Matrix':
             pass
 
-        def scale(self, scale: Union[int, float]) -> 'Matrix':
-            pass
+        def scale(self, scale: Union[Iterable[Union[int, float, complex]], int, float, complex]) -> 'Matrix':
+            if isinstance(scale, (int, float, complex)):
+                mul = [scale] * self.matrix.order[0]
+            else: 
+                mul = [*scale] + [1] * (self.matrix.order[0] - len(scale))
+
+            return self.matrix @ self.matrix.__class__([[mul[i] if i==j else 0 for i in range(len(mul))] for j in range(len(mul))])
 
         def rotate(self, angle: Union[int, float]):
             pass
