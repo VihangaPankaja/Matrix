@@ -1102,7 +1102,7 @@ class Matrix:   # TODO: exception handling not done completely
                 tmp[i][j] = round(self._matrix[i][j], precision)
 
         return __class__(tmp)
-
+    
     class __ElementaryTransform:
         def __init__(self, matrix: 'Matrix'):
             self.matrix = matrix

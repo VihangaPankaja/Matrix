@@ -39,7 +39,35 @@ Just download the matrix.py file to the project directory 😁
 
 - ### Operations
 
-  ```python
+  - supported operators :-
+
+    >  **+&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;%&nbsp;&nbsp;&nbsp;\*\*&nbsp;&nbsp;&nbsp;^&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&&nbsp;&nbsp;&nbsp;>>&nbsp;&nbsp;&nbsp;<<&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;==&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;<=&nbsp;&nbsp;&nbsp;>=&nbsp;&nbsp;&nbsp;!=**
+    >
+    > - if left and right are both matrices (both should be in same order) -> do the operation to corresponding elements.
+    > - if one side is not a matrix(int, float, complex,...) -> apply the operator to every element of the matrix with that one value.
+
+  - **@** (matrix multiplication)
+  - **matrix_power** (matrix power from matrix multiplication)
+  - **Kronecker_product**
+  - **Hadamard_product**
+  - **reshape**
+  - **cofactor**
+  - **minors**
+  - **submatrix**
+  - **round**
+
+- ### Properties
   
-  ```
-<!-- TODO: fill this shit -->
+  - **order**
+  - **bool**
+
+- ### Elementary Transform
+
+  - **row_echelon**
+  - **column_echelon**
+  - **row_multiply**
+  - **column_multiply**
+  - **row_transform**
+  - **column_transform**
+  - **row_swap**
+  - **column_swap**
