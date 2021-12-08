@@ -1233,38 +1233,38 @@ class Matrix:   # TODO: exception handling not done completely
         def row_multiply(self, row: int, mul: Union[int, float]) -> 'Matrix':
             mat = self.matrix._matrix.copy()
             mat[row-1] = [i*mul for i in mat[row-1]]
-            return __class__(mat)
+            return self.matrix.__class__(mat)
 
         def column_multiply(self, col: int, mul: Union[int, float]) -> 'Matrix':
             mat = deepcopy(self.matrix._matrix)
             for row in mat:
                 row[col-1] = row[col-1]*mul
 
-            return __class__(mat)
+            return self.matrix.__class__(mat)
 
         def row_transform(self, R_n1: int, x: Union[int, float], R_n2: int) -> 'Matrix':
             mat = deepcopy(self.matrix._matrix)
             mat[R_n1-1] = [i+x*j for i, j in zip(mat[R_n1-1], mat[R_n2-1])]
 
-            return __class__(mat)
+            return self.matrix.__class__(mat)
 
         def column_transform(self, C_n1: int, x: Union[int, float], C_n2: int) -> 'Matrix':
             mat = deepcopy(self.matrix._matrix)
             for row in mat:
                 row[C_n1-1] = row[C_n1-1] + x*row[C_n2-1]
 
-            return __class__(mat)
+            return self.matrix.__class__(mat)
 
         def row_swap(self, R_n1: int, R_n2: int) -> 'Matrix':
             mat = deepcopy(self.matrix._matrix)
             mat[R_n1-1], mat[R_n2-1] = mat[R_n2-1], mat[R_n1-1]
 
-            return __class__(mat)
+            return self.matrix.__class__(mat)
 
         def column_swap(self, C_n1: int, C_n2: int) -> 'Matrix':
             mat = deepcopy(self.matrix._matrix)
             for row in mat:
                 row[C_n1-1], row[C_n2-1] = row[C_n2-1], row[C_n1-1]
 
-            return __class__(mat)
+            return self.matrix.__class__(mat)
         
