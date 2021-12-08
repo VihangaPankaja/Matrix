@@ -88,7 +88,6 @@ class Matrix:   # TODO: exception handling not done completely
 
         self._matrix = list(map(list, elements))
         self.ElementaryTransform = __class__.__ElementaryTransform(self)
-        self.LinearTransform = __class__.__LinearTransform(self)
 
     @cached_property
     def order(self) -> tuple[int, int]:
