@@ -61,6 +61,7 @@ class MatrixError(Exception):
 
 
 class Matrix:   # TODO: exception handling not done completely
+    UNICODE = True
 
     def __init__(self, elements: Iterable[Iterable[Union[int, float, complex]]]) -> None:
         """
@@ -355,13 +356,18 @@ class Matrix:   # TODO: exception handling not done completely
     def det(mat: 'Matrix') -> Union[int, float, complex]:
         return abs(mat)
 
-    def __str__(self) -> str:   # TODO: implement fallback to str method for terminals that doesn't support unicode
+    def __str__(self) -> str:
         col_spans = list(len(max(map(str, self.get_column(col+1)), key=len))
-                         for col in range(self.order[1]))
-        start = f'┏{" "* (self.order[1] + 1 + sum(col_spans))}┓'
-        end = f'┗{" "* (self.order[1] + 1 + sum(col_spans))}┛'
+                        for col in range(self.order[1]))
+        if __class__.UNICODE:
+            border = {'tl':'┏', 'tr':'┓', 'bl':'┗', 'br':'┛', 'v':'┃'}
+        else:
+            border = {'tl':' ', 'tr':' ', 'bl':' ', 'br':' ', 'v':'|'}
+        
+        start = f'{border["tl"]}{" "* (self.order[1] + 1 + sum(col_spans))}{border["tr"]}'
+        end = f'{border["bl"]}{" "* (self.order[1] + 1 + sum(col_spans))}{border["br"]}'
         data = [
-            f'┃ {" ".join(str(x[i]).rjust(col_spans[i]) for i in range(len(col_spans)))} ┃' for x in self._matrix]
+            f'{border["v"]} {" ".join(str(x[i]).rjust(col_spans[i]) for i in range(len(col_spans)))} {border["v"]}' for x in self._matrix]
 
         return '\n'.join([start, *data, end]) + f'{self.order[0]}×{self.order[1]}\n'
 
